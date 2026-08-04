@@ -1,0 +1,77 @@
+{
+  "dimensions": {
+    "semantic_summary": {
+      "name": "语义压缩",
+      "required": true,
+      "description": "对对话内容进行精简摘要，突出核心问题和处理结果",
+      "constraints": {
+        "min_length": 50,
+        "max_length": 200,
+        "format": "text with **bold** markup"
+      }
+    },
+    "merchant_sentiment": {
+      "name": "商家情绪",
+      "required": true,
+      "description": "仅针对对话中商家（客服）的服务表现进行情绪/质量分类",
+      "values": ["正向情绪", "中性情绪", "负向情绪", "强烈负向情绪"]
+    },
+    "user_request": {
+      "name": "用户诉求",
+      "required": false,
+      "values": [
+        "refund_only",
+        "return_refund",
+        "exchange",
+        "repair",
+        "resend",
+        "partial_return",
+        "installation",
+        "cancel_order"
+      ]
+    },
+    "consensus_reached": {
+      "name": "是否达成一致",
+      "required": true,
+      "values": ["yes", "no", "unclear"]
+    },
+    "consensus_solution": {
+      "name": "达成一致方案",
+      "required": false,
+      "condition": "仅当consensus_reached=yes时标记",
+      "values": [
+        "cancel_order",
+        "refund_only",
+        "return_refund",
+        "exchange",
+        "repair",
+        "resend",
+        "free_shipping",
+        "partial_return",
+        "installation"
+      ]
+    },
+    "intervention_needed": {
+      "name": "介入时机",
+      "required": true,
+      "values": ["yes", "no"],
+      "triggers": [
+        "明确要求转人工/升级/投诉举报",
+        "多轮拒绝方案且仍未达成一致",
+        "客服无法给出可执行方案",
+        "出现明确攻击、威胁、辱骂且问题未解决"
+      ]
+    },
+    "intervention_type": {
+      "name": "介入时机类型",
+      "required": false,
+      "condition": "仅当intervention_needed=yes时标记",
+      "values": [
+        "escalate_to_agent",
+        "multiple_rejections",
+        "no_viable_solution",
+        "abuse_or_threat"
+      ]
+    }
+  }
+}
